@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         txtPomodoro = (TextView) findViewById(R.id.pomodoroTime);
 
+        initializeWidgets();
+    }
+
+    private void initializeWidgets() {
         progressBar.setMax(60);
         progressBar.setProgress(20);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
