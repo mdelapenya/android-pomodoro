@@ -29,11 +29,35 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setProgress(INITIAL_SECONDS);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
 
+        btnPause.setEnabled(false);
+
+        final PomodoroCountdownTimer.Listener listener = new PomodoroCountdownTimer.Listener() {
+
+            @Override
+            public void onProgressChange(int progress) {
+                progressBar.setProgress(progress);
+            }
+
+            @Override
+            public void onCountDownChange(String countDown) {
+                txtPomodoro.setText(countDown);
+            }
+
+            @Override
+            public void onFinish() {
+                txtPomodoro.setText("00:00");
+                progressBar.setProgress(INITIAL_SECONDS + TOTAL_SECONDS);
+            }
+
+        };
+
         btnPause.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 pomodoroCountdownTimer.cancel();
+
+                toggleButtons();
 
                 Toast.makeText(
                     view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
@@ -45,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                toggleButtons();
+
+                pomodoroCountdownTimer = new PomodoroCountdownTimer(
+                    TOTAL_SECONDS, TOTAL_SECONDS - progressBar.getProgress(), listener);
+
                 pomodoroCountdownTimer.start();
 
                 Toast.makeText(
@@ -52,27 +81,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+    }
 
-        pomodoroCountdownTimer = new PomodoroCountdownTimer(
-            TOTAL_SECONDS, TOTAL_SECONDS, new PomodoroCountdownTimer.Listener() {
+    private void toggle(Button button) {
+        button.setEnabled(!button.isEnabled());
+    }
 
-                @Override
-                public void onProgressChange(int progress) {
-                    progressBar.setProgress(progress);
-                }
-
-                @Override
-                public void onCountDownChange(String countDown) {
-                    txtPomodoro.setText(countDown);
-                }
-
-                @Override
-                public void onFinish() {
-                    txtPomodoro.setText("00:00");
-                    progressBar.setProgress(INITIAL_SECONDS + TOTAL_SECONDS);
-                }
-            }
-        );
+    private void toggleButtons() {
+        toggle(btnPause);
+        toggle(btnStart);
     }
 
     private static final int INITIAL_SECONDS = 0;
