@@ -9,10 +9,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
+    android:background="@color/colorPrimary"
+    style="@style/AppTheme"
     tools:context="es.mdelapenya.android.pomodoro.ActivityRelax">
 
     <TextView
         android:text="@string/congrats"
+        android:textColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:text="@string/congrats"/>
