@@ -32,10 +32,51 @@ public class MainActivity extends AppCompatActivity {
         pauseCountdown();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        startCountdown();
+    }
+
     private void initializeWidgets() {
         progressBar.setMax(TOTAL_SECONDS);
         progressBar.setProgress(INITIAL_SECONDS);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
+
+        btnPause.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                pauseCountdown();
+
+                Toast.makeText(
+                    view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startCountdown();
+
+                Toast.makeText(
+                    view.getContext(), R.string.starting_pomodoro, Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    private void pauseCountdown() {
+        pomodoroCountdownTimer.cancel();
+
+        toggleButtons();
+    }
+
+    private void startCountdown() {
+        toggleButtons();
 
         final PomodoroCountdownTimer.Listener listener = new PomodoroCountdownTimer.Listener() {
 
@@ -59,40 +100,10 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        btnPause.setOnClickListener(new View.OnClickListener() {
+        pomodoroCountdownTimer = new PomodoroCountdownTimer(
+            TOTAL_SECONDS, TOTAL_SECONDS - progressBar.getProgress(), listener);
 
-            @Override
-            public void onClick(View view) {
-                pauseCountdown();
-
-                Toast.makeText(
-                    view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-        btnStart.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                toggleButtons();
-
-                pomodoroCountdownTimer = new PomodoroCountdownTimer(
-                    TOTAL_SECONDS, TOTAL_SECONDS - progressBar.getProgress(), listener);
-
-                pomodoroCountdownTimer.start();
-
-                Toast.makeText(
-                    view.getContext(), R.string.starting_pomodoro, Toast.LENGTH_SHORT).show();
-            }
-
-        });
-    }
-
-    private void pauseCountdown() {
-        pomodoroCountdownTimer.cancel();
-
-        toggleButtons();
+        pomodoroCountdownTimer.start();
     }
 
     private void toggle(Button button) {
