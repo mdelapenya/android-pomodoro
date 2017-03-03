@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity {
         initializeWidgets();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        pauseCountdown();
+    }
+
     private void initializeWidgets() {
         progressBar.setMax(TOTAL_SECONDS);
         progressBar.setProgress(INITIAL_SECONDS);
@@ -58,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                pomodoroCountdownTimer.cancel();
-
-                toggleButtons();
+                pauseCountdown();
 
                 Toast.makeText(
                     view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
@@ -84,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    private void pauseCountdown() {
+        pomodoroCountdownTimer.cancel();
+
+        toggleButtons();
     }
 
     private void toggle(Button button) {
