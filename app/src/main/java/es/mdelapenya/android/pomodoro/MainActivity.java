@@ -25,14 +25,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeWidgets() {
-        progressBar.setMax(60);
-        progressBar.setProgress(20);
+        progressBar.setMax(TOTAL_SECONDS);
+        progressBar.setProgress(INITIAL_SECONDS);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
 
         btnPause.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                pomodoroCountdownTimer.start();
+
                 Toast.makeText(
                     view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
             }
@@ -43,15 +45,42 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                pomodoroCountdownTimer.start();
+
                 Toast.makeText(
                     view.getContext(), R.string.starting_pomodoro, Toast.LENGTH_SHORT).show();
             }
 
         });
+
+        pomodoroCountdownTimer = new PomodoroCountdownTimer(
+            TOTAL_SECONDS, TOTAL_SECONDS, new PomodoroCountdownTimer.Listener() {
+
+                @Override
+                public void onProgressChange(int progress) {
+                    progressBar.setProgress(progress);
+                }
+
+                @Override
+                public void onCountDownChange(String countDown) {
+                    txtPomodoro.setText(countDown);
+                }
+
+                @Override
+                public void onFinish() {
+                    txtPomodoro.setText("00:00");
+                    progressBar.setProgress(INITIAL_SECONDS + TOTAL_SECONDS);
+                }
+            }
+        );
     }
+
+    private static final int INITIAL_SECONDS = 0;
+    private static final int TOTAL_SECONDS = 10;
 
     private Button btnPause;
     private Button btnStart;
+    private PomodoroCountdownTimer pomodoroCountdownTimer;
     private ProgressBar progressBar;
     private TextView txtPomodoro;
 
