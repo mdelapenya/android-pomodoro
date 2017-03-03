@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         txtPomodoro = (TextView) findViewById(R.id.pomodoroTime);
 
         progressBar.setMax(60);
-        progressBar.setProgress(0);
+        progressBar.setProgress(20);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
     }
 
