@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                pomodoroCountdownTimer.start();
+                pomodoroCountdownTimer.cancel();
 
                 Toast.makeText(
                     view.getContext(), R.string.pausing_pomodoro, Toast.LENGTH_SHORT).show();
