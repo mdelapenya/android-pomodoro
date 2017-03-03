@@ -54,6 +54,7 @@
         <Button
             android:id="@+id/btnPause"
             android:text="@string/pause"
+            android:enabled="false"
             android:textColor="@color/colorAccent"
             android:background="@color/colorPrimary"
             android:layout_width="wrap_content"

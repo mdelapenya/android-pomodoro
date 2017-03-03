@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setProgress(INITIAL_SECONDS);
         txtPomodoro.setText(R.string.defaultPomodoroValue);
 
-        btnPause.setEnabled(false);
-
         final PomodoroCountdownTimer.Listener listener = new PomodoroCountdownTimer.Listener() {
 
             @Override
