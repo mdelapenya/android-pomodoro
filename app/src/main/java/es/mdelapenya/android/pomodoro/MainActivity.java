@@ -1,5 +1,6 @@
 package es.mdelapenya.android.pomodoro;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 txtPomodoro.setText("00:00");
                 progressBar.setProgress(INITIAL_SECONDS + TOTAL_SECONDS);
+
+                startActivity(new Intent(MainActivity.this, ActivityRelax.class));
             }
 
         };
