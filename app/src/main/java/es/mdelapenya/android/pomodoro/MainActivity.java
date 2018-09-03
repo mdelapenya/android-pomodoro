@@ -1,6 +1,7 @@
 package es.mdelapenya.android.pomodoro;
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         startCountdown();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+        outState.putInt("PROGRESS", progressBar.getProgress());
     }
 
     private void initializeWidgets() {
